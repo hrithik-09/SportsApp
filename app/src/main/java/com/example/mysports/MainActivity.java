@@ -1,6 +1,8 @@
 package com.example.mysports;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemClickListener{
 
     RecyclerView recyclerView;
     List<Sport>sportList;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.recyclerView);
         sportList=new ArrayList<>();
@@ -42,5 +44,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         myAdapter=new CustomAdapter(sportList);
         recyclerView.setAdapter(myAdapter);
+
+        myAdapter.setClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v, int pos) {
+        Toast.makeText(this,"You Choose: "+sportList.get(pos).getSportName(),Toast.LENGTH_SHORT).show();
     }
 }
